@@ -1,19 +1,18 @@
 {
   "name": "konva-export",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
   "files": [
     "dist",
     "index.d.ts"
   ],
-  "main": "./dist/counter.umd.cjs",
-  "module": "./dist/counter.js",
+  "main": "./dist/konva-export.umd.cjs",
+  "module": "./dist/konva-export.js",
   "types": "./index.d.ts",
   "exports": {
     "types": "./index.d.ts",
-    "import": "./dist/counter.js",
-    "require": "./dist/counter.umd.cjs"
+    "import": "./dist/konva-export.js",
+    "require": "./dist/konva-export.umd.cjs"
   },
   "scripts": {
     "dev": "vite",

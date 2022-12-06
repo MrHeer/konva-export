@@ -1,7 +1,7 @@
 import Konva from "konva";
 import { animate } from "popmotion";
 
-import { GIFExporter, GIFRender } from "../lib";
+import { GIFExporter, GIFRender } from "../lib/main";
 
 import "./style.css";
 
