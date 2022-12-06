@@ -25,13 +25,14 @@ export class GIFRecorder implements IStageRecorder<GIF> {
       console.warn("Still recording.");
       return;
     }
-
+    console.log("Recording.");
     this.gif = [];
     this.recording();
   };
 
   finish = () => {
     if (this.isRecording()) {
+      console.log("Finish recording.");
       cancelAnimationFrame(this.requestAnimationFrameId!);
       this.requestAnimationFrameId = null;
     }

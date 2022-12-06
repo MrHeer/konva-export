@@ -42,27 +42,22 @@ text.offsetY(text.height() / 2);
 group.add(circle);
 group.add(text);
 
+let scaleState = 1;
+
+let stop = () => {};
+
 const clickHandler = () => {
-  animate({
-    from: 1,
+  stop = animate({
+    from: scaleState,
     velocity: -10,
     type: "spring",
     restDelta: 0.0001,
-    onPlay: () => {
-      group.removeEventListener("click");
-      recorder.record();
-    },
+    onPlay: stop,
     onUpdate: (scale) => {
+      scaleState = scale;
       circle.scale({ x: scale, y: scale });
     },
-    onComplete: () => {
-      recorder.finish();
-      const gif = recorder.data();
-      gifExporter(gif);
-      gifRender.render(gif);
-      bindClickHandler();
-    },
-  });
+  }).stop;
 };
 
 const bindClickHandler = () => {
@@ -71,11 +66,38 @@ const bindClickHandler = () => {
 
 const bindHoverEffect = () => {
   group.on("mouseenter", () => {
+    recorder.record();
     stage.container().style.cursor = "pointer";
+    stop = animate({
+      from: scaleState,
+      to: 1.2,
+      type: "spring",
+      onPlay: stop,
+      onUpdate: (scale) => {
+        scaleState = scale;
+        circle.scale({ x: scale, y: scale });
+      },
+    }).stop;
   });
 
   group.on("mouseleave", () => {
     stage.container().style.cursor = "default";
+    stop = animate({
+      from: scaleState,
+      to: 1,
+      type: "spring",
+      onPlay: stop,
+      onUpdate: (scale) => {
+        scaleState = scale;
+        circle.scale({ x: scale, y: scale });
+      },
+      onComplete: () => {
+        recorder.finish();
+        const gif = recorder.data();
+        gifExporter(gif);
+        gifRender.render(gif);
+      },
+    }).stop;
   });
 };
 
