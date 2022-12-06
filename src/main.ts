@@ -1,9 +1,11 @@
 import Konva from "konva";
-import { animate } from "popmotion";
 
-import { gifExporter, GIFRecorder, GIFRender } from "../lib/main";
+import { Animation, gifExporter, GIFRecorder, GIFRender } from "../lib/main";
 
 import "./style.css";
+
+// scale animation
+const { animate } = new Animation(1);
 
 const gifRender = new GIFRender(
   document.getElementById("img") as HTMLImageElement
@@ -42,22 +44,15 @@ text.offsetY(text.height() / 2);
 group.add(circle);
 group.add(text);
 
-let scaleState = 1;
-
-let stop = () => {};
-
 const clickHandler = () => {
-  stop = animate({
-    from: scaleState,
+  animate({
     velocity: -10,
     type: "spring",
     restDelta: 0.0001,
-    onPlay: stop,
     onUpdate: (scale) => {
-      scaleState = scale;
       circle.scale({ x: scale, y: scale });
     },
-  }).stop;
+  });
 };
 
 const bindClickHandler = () => {
@@ -68,27 +63,21 @@ const bindHoverEffect = () => {
   group.on("mouseenter", () => {
     recorder.record();
     stage.container().style.cursor = "pointer";
-    stop = animate({
-      from: scaleState,
+    animate({
       to: 1.2,
       type: "spring",
-      onPlay: stop,
       onUpdate: (scale) => {
-        scaleState = scale;
         circle.scale({ x: scale, y: scale });
       },
-    }).stop;
+    });
   });
 
   group.on("mouseleave", () => {
     stage.container().style.cursor = "default";
-    stop = animate({
-      from: scaleState,
+    animate({
       to: 1,
       type: "spring",
-      onPlay: stop,
       onUpdate: (scale) => {
-        scaleState = scale;
         circle.scale({ x: scale, y: scale });
       },
       onComplete: () => {
@@ -97,7 +86,7 @@ const bindHoverEffect = () => {
         gifExporter(gif);
         gifRender.render(gif);
       },
-    }).stop;
+    });
   });
 };
 
