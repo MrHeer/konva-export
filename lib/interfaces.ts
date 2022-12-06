@@ -1,6 +1,11 @@
 export interface IStageExporter<T> {
-  addFrame(): void;
-  export(): T;
+  (record: T): void;
+}
+
+export interface IStageRecorder<T> {
+  record(): void;
+  finish(): void;
+  data(): T;
 }
 
 export type DataURL = string;
