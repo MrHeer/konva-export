@@ -1,0 +1,17 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+}
+
+#img {
+  width: 500px;
+  height: 500px;
+  border: 1px grey solid;
+}
